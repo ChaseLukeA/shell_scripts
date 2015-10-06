@@ -4,13 +4,6 @@
 # chase.luke.a@gmail.com
 # Copyright 2014
 
-# In terminal, type "cd /" to go to the root folder
-# Type "sudo -s" to get a root shell
-# Type "touch ~/timestamp" to create a timestamp file
-#   This creates/updates a file to compare changed
-#   files to (anything created after this stamp)
-# Type "find -x / -newer ~/timestamp >~/changedfiles.txt"
-#   to create changedfiles.txt in your user folder
 clear
 
 ROOT_UID="0"
