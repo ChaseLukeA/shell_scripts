@@ -3,7 +3,6 @@
 # chase.luke.a@mgail.com
 # Copyright 2015
 
-# clears the screen before starting script
 clear
 
 errorMsg="Invalid parameter(s) passed in. Please run \"md5hash\" for help."
