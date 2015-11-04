@@ -1,11 +1,15 @@
+" vimrc file
+" By Luke A Chase
+" chase.luke.a@gmail.com
+" Copyright 2015
+"------------------------------------------------------------------------------
+" Copy this file to:
+"     Unix and OS/2:  ~/.vimrc
+"	        for Amiga:  s:.vimrc
+"  MS-DOS and Win32:  $VIM\_vimrc
+"	      for OpenVMS:  sys$login:.vimrc
+"------------------------------------------------------------------------------
 
-" my vimrc file.
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -16,8 +20,13 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" Different xterm settings I'm playing with on different versions of vim:
 " Use xterm for coloring
-"set term=builtin_beos-ansi
+" set term=builtin_beos-ansi
+" set term=builtin_ansi
+" set term=xterm-256colors      ## for iTerm 2 ##
+" set term=xterm
+set t_Co=256
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -56,6 +65,36 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
+
+  "/----- START VUNDLE -----\
+  " set the runtime path to include Vundle and initialize
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
+  " alternatively, pass a path where Vundle should install plugins
+  "call vundle#begin('~/some/path/here')
+
+  " let Vundle manage Vundle, required
+  Plugin 'VundleVim/Vundle.vim'
+
+  " ----- VUNDLE PLUGINS START -----
+  Plugin 'rizzatti/dash.vim'
+  Plugin 'scrooloose/nerdcommenter'
+  Plugin 'scrooloose/nerdtree'
+  Plugin 'ervandrew/supertab.vim'
+
+  " ----- VUNDLE PLUGINS END -----
+
+  " All of your Plugins must be added before the following line
+  call vundle#end()            " required
+  "
+  " Brief help
+  " :PluginList       - lists configured plugins
+  " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+  " :PluginSearch foo - searches for foo; append `!` to refresh local cache
+  " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+  "
+  " see :h vundle for more details or wiki for FAQ
+  "\----- END VUNDLE -----/
 
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -96,9 +135,9 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-" -----------------------------------------------------------------------------
-" Commands Added by ChaseLukeA
-" -----------------------------------------------------------------------------
+"------------------------------------------------------------------------------
+" My customized options
+"------------------------------------------------------------------------------
 
 " Sets number lines on the left of screen
 set number
@@ -107,8 +146,8 @@ set number
 set hls is
 
 " Sets backup directory
-set backupdir=$HOME/tmp/backup//
-set directory=$HOME/tmp/backup//
+set backupdir=$HOME/Temp/Backup//
+set directory=$HOME/Temp/Backup//
 
 " sets tab
 set tabstop=2
@@ -136,25 +175,36 @@ map <leader>f :tabn<CR>
 " map jj in INSERT mode to write file to disk
 imap jj <ESC>:w<CR>
 
-" map kk in INSERT mode to escape from insert mode
-imap kk <ESC>
+" I want to be in insert mode... Just kidding! hehe
+imap jk <ESC>
 
 " sets colorscheme for vim 
-"colorscheme darkblue
+colorscheme desert
 
 " sets colored column at line 80 for programming
 set colorcolumn=80
 
-" underlines current line
+" underline current line
 set cursorline
 highlight CursorLine cterm=bold
-highlight CursorLine ctermbg=233
+highlight CursorLine ctermbg=234
 
 " highlights the current column
 set cursorcolumn
-highlight CursorColumn ctermbg=233
+highlight CursorColumn ctermbg=235
 
-" changes vim to hex mode
+" create new vertical split [,1]
+nmap <Leader>1 :vs<cr>
+
+" create new horizontal split [,2]
+nmap <Leader>2 :sp<cr>
+
+" move to next split window [,s]
+nmap <Leader>s <C-W><C-W>
+
+
+" /--- HEX MODE ---
+" change current file to hex mode [,h]
 map <leader>h :call HexMe()<CR>
 
 let $in_hex=0
@@ -169,8 +219,11 @@ function HexMe()
     let $in_hex=1
   endif
 endfunction
+" --- HEX MODE ---/
 
-" sets 'g' to launch current file
+
+" /--- OPEN FILE ---
+" open current file [,g]
 if has('win32') || has ('win64')
   let $CLEAR_COMMAND="cls"
 else
@@ -194,13 +247,14 @@ autocmd FileType groovy  nmap <Leader>g :!"$CLEAR_COMMAND"; groovy "%"<cr>
 autocmd FileType sh  nmap <Leader>g :!"$CLEAR_COMMAND"; sh "%"<cr>
 autocmd FileType python  nmap <Leader>g :!"$CLEAR_COMMAND"; python "%"<cr>
 autocmd FileType elixir  nmap <Leader>g :!"$CLEAR_COMMAND"; elixir "%"<cr>
+" --- OPEN FILE ---/
 
-" set vertical/horizontal splits
-nmap <Leader>1 :vs<cr>
-nmap <Leader>2 :sp<cr>
 
-" set 's' to next split
-nmap <Leader>s <C-W><C-W>
+" /--------------------- PLUGIN CONFIGS START ---------------------\
 
-" set color scheme
-color darkblue
+" NERDTree
+" --------
+" open nerdtree
+map <Leader>t :NERDTreeToggle<CR>
+
+" \---------------------- PLUGIN CONFIGS END ----------------------/
